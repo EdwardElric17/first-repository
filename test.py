@@ -1,3 +1,2 @@
-print("Hello, World!")
-print("How are you?")
-print("New changes!")
+print('wd;lfjl;sa')
+print(2*5)
