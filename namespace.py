@@ -1,24 +1,26 @@
-nmsp_var = {'global':set()}
-prnt_nmsp = {'None':'global'}
-for i in input():
-    cmd, namespace, var = (str(j) for j in input().split())
-    if cmd == 'create':
-        if var not in prnt_nmsp:
-            prnt_nmsp[var] = set()
-        prnt_nmsp[var].append(namespace)
-    if cmd == 'add':
-        if var not in nmsp_var:
-            nmsp_var[namespace] = set()
-        nmsp_var[namespace].append(var)
-    if cmd == 'get':
-        if var in nmsp_var[namespace]:
-            print(namespace)
-        elif var not in nmsp_var[namespace]:
-            def get_key(var):
-                for key, value in prnt_nmsp.items():
-                    if namespace == value:
-                        if var in nmsp_var[namespace]:
-                            return(key)
+nmsp_var = {'global':{}} #создаём словарь 'пространство-переменная'
+prnt_nmsp = {'None':{'global'}} #создаём словарь 'родитель-пространство'
+for i in range(int(input())):
+    cmd, namespace, var = (str(j) for j in input().split()) #вводим значения для переменных cmd, namespace и var 
+    if cmd == 'create': #если cmd равно 'create', то создаём пространство namespace внутри протсранства var
+        if var not in prnt_nmsp: #проверяем есть ли пространство var в словаре 'родитель-пространство'
+            prnt_nmsp[var] = {} #если нет, то создаем его
+        prnt_nmsp[var] = namespace #добавляем в него пространтсво namespace
+    if cmd == 'add': #если cmd равно 'add', то добавляем в пространство namespace переменную var
+        if namespace not in nmsp_var:  #проверяем есть ли пространство namespace в словаре 'пространство-переменная'
+            nmsp_var[namespace] = {} #если нет, то создаём пространство namespace в словарь 'пространство-переменная'
+        nmsp_var[namespace] = (var) #добавляем в неё переменную var
+    if cmd == 'get': #если cmd равно 'get', то возвращаем пространство в котором находится var. Если такого пространства нет, возвращаем None
+        if var in nmsp_var[namespace]: #проверяем есть ли в пространстве namespace var
+            print(namespace) #если есть, то выводим имя этого пространства 
+        elif var not in nmsp_var[namespace]: #если нет, то выполняется функция get_key
+            def get_key(namespace): #функция позволяет узнать ключ по значению 
+                for key, value in prnt_nmsp.items(): #перебираем ключи и их значения
+                    if value == namespace: #если namespace совпадает с значением какого-либо ключа
+                        if var in nmsp_var[key]: #проверяем есть ли значение var в протсранстве key
+                            print(key) #если есть, то возвращаем пространство key
                         else:
-                            k = key
+                            k = key #в противном случае вызываем функцию внутри самой себя с аргументом k = key
                             get_key(k)
+                    elif value == 'None':
+                        print('None')
