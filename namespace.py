@@ -12,15 +12,19 @@ for i in range(int(input())):
         nmsp_var[namespace] = (var) #добавляем в неё переменную var
     if cmd == 'get': #если cmd равно 'get', то возвращаем пространство в котором находится var. Если такого пространства нет, возвращаем None
         if var in nmsp_var[namespace]: #проверяем есть ли в пространстве namespace var
-            print(namespace) #если есть, то выводим имя этого пространства 
-        elif var not in nmsp_var[namespace]: #если нет, то выполняется функция get_key
+            print(namespace) 
+        else:            
             def get_key(namespace): #функция позволяет узнать ключ по значению 
+                no = 0
                 for key, value in prnt_nmsp.items(): #перебираем ключи и их значения
-                    if value == namespace: #если namespace совпадает с значением какого-либо ключа
+                    if namespace in value: #если namespace совпадает с значением какого-либо ключа
                         if var in nmsp_var[key]: #проверяем есть ли значение var в протсранстве key
-                            print(key) #если есть, то возвращаем пространство key
+                            print(value) #если есть, то возвращаем пространство key
+                            no = 1
+                            break
                         else:
                             k = key #в противном случае вызываем функцию внутри самой себя с аргументом k = key
                             get_key(k)
-                    elif value == 'None':
-                        print('None')
+                if no != 1:
+                    print('None')
+        get_key(namespace)
