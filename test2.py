@@ -1,8 +1,3 @@
-def a(c):
-    return 2*c > 10
-def b(c):
-    if a(c):
-        print('yes!')
-    else:
-        print('nooooo...')
-b(int(input()))
+list = [1, 2, 3, 4]
+list.remove(1)
+print(list)
