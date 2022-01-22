@@ -1,3 +1,4 @@
-di = {'a':[1, 2, 3]}
-for i in di['a']:
-    print(i)
+a = 'asdf dsad fdsa sda'
+lst1 = []
+lst1.extend(a.split())
+print(lst1)
